@@ -175,6 +175,8 @@ public class UIUtilities
 
 	public static final ImageIcon HEART_ICON;
 
+	public static final ImageIcon SEARCH_ICON;
+
 	static
 	{
 		final BufferedImage openIcon = ImageUtil
@@ -239,6 +241,9 @@ public class UIUtilities
 
 		final BufferedImage heart = ImageUtil.getResourceStreamFromClass(FlippingPlugin.class, "/heart.png");
 		HEART_ICON = new ImageIcon(heart);
+
+		final BufferedImage search = ImageUtil.getResourceStreamFromClass(FlippingPlugin.class, "/search.png");
+		SEARCH_ICON = new ImageIcon(search);
 
 	}
 

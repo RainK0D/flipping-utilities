@@ -40,6 +40,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.Duration;
@@ -117,7 +118,7 @@ public class FlippingItemPanel extends JPanel
 		setValueLabels();
 		updateTimerDisplays();
 
-		JPanel titlePanel = createTitlePanel(createItemIcon(itemImage), createDeleteButton(onDeleteCallback), createItemNameLabel(), createFavoriteIcon());
+		JPanel titlePanel = createTitlePanel(createItemIcon(itemImage), createDeleteButton(onDeleteCallback), createItemNameLabel(), createFavoriteIcon(), createSearchIcon());
 		itemInfo = createItemInfoPanel();
 		timeInfoPanel = createTimeInfoPanel();
 		timeInfoPanel.setVisible(false);
@@ -411,19 +412,24 @@ public class FlippingItemPanel extends JPanel
 	 * @param favoriteButton
 	 * @return
 	 */
-	private JPanel createTitlePanel(JLabel itemIcon, JButton deleteButton, JLabel itemNameLabel, JLabel favoriteButton)
+	private JPanel createTitlePanel(JLabel itemIcon, JButton deleteButton, JLabel itemNameLabel, JLabel favoriteButton, JLabel searchButton)
 	{
 		JPanel itemClearPanel = new JPanel(new BorderLayout());
 		itemClearPanel.setBackground(getBackground());
 		itemClearPanel.add(itemIcon, BorderLayout.WEST);
 		itemClearPanel.add(deleteButton, BorderLayout.EAST);
 
+		JPanel searchAndFavoriteIconPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		searchAndFavoriteIconPanel.setBackground(UIUtilities.DARK_GRAY);
+		searchAndFavoriteIconPanel.add(searchButton);
+		searchAndFavoriteIconPanel.add(favoriteButton);
+
 		JPanel titlePanel = new JPanel(new BorderLayout());
 		titlePanel.setComponentPopupMenu(UIUtilities.createGeTrackerLinksPopup(flippingItem));
 		titlePanel.setBackground(getBackground());
 		titlePanel.add(itemClearPanel, BorderLayout.WEST);
 		titlePanel.add(itemNameLabel, BorderLayout.CENTER);
-		titlePanel.add(favoriteButton, BorderLayout.EAST);
+		titlePanel.add(searchAndFavoriteIconPanel, BorderLayout.EAST);
 		titlePanel.setBorder(new EmptyBorder(2, 1, 2, 1));
 		titlePanel.addMouseListener(new MouseAdapter()
 		{
@@ -552,7 +558,6 @@ public class FlippingItemPanel extends JPanel
 	{
 		JLabel favoriteIcon = new JLabel();
 		favoriteIcon.setIcon(flippingItem.isFavorite() ? STAR_ON_ICON : STAR_OFF_ICON);
-		favoriteIcon.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		favoriteIcon.setPreferredSize(new Dimension(24, 24));
 		favoriteIcon.addMouseListener(new MouseAdapter()
 		{
@@ -599,6 +604,12 @@ public class FlippingItemPanel extends JPanel
 		});
 
 		return favoriteIcon;
+	}
+
+	private JLabel createSearchIcon() {
+		JLabel searchIcon = new JLabel();
+		searchIcon.setIcon(UIUtilities.SEARCH_ICON);
+		return searchIcon;
 	}
 
 	public void expand()
